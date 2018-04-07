@@ -31,7 +31,7 @@ def game():
     window.title("Go!")
     window.geometry("414x736")
     clear_grid()
-    padding = window.winfo_height()/num_squares         #spacing between squares 
+    padding = window.winfo_height()/(num_squares+5)         #spacing between squares 
     make_buttons(num_squares,padding)
     flash_buttons(num_flashes)
 
