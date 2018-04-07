@@ -2,7 +2,6 @@ import Tkinter as tk, time, sys, random, math
 from Tkinter import *
 from random import shuffle
 #from PIL import ImageTk
-#from PIL import ImageTk
 
 game_desc=' Welcome to Flashback! This game has a grid with objects\n that light up. Your goal is to repeat the same pattern to \n beat the level in the allotted time.\n\n As the game progresses, the speed, block sizes, and\n sequence increases.\n\n When the time runs out, the game is over.'
 
@@ -18,9 +17,9 @@ window.title("Flashback!")
 window.geometry("414x736")
 
 #background_image=PIL.Image.open("FlashBack_Menu_Screen.png")			#background image for app
-pic = tk.PhotoImage("FlashBack_Menu_Screen.png")
+pic = tk.PhotoImage("FlashBack_Menu_Screen.gif")
 label = Label(window, image=pic)
-label.image = pic
+#label.image = pic
 label.place(x=0,y=0, relwidth=1, relheight=1)
 
 #------Datasets-------
