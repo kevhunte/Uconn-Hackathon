@@ -2,7 +2,7 @@ import Tkinter as tk, time, sys, random, math
 from Tkinter import Menu
 from Tkinter import *
 
-game_desc='Welcome to bomb-bomb! This game has a grid with objects that light up.\n Your goal is to repeat the same pattern to beat the level in the allotted time.\n As the game progresses, the speed, block sizes, and sequence increase.\n When the time runs out, the game is over.'
+game_desc='Welcome to bomb-bomb! This game has a grid with objects that light up.\n Your goal is to repeat the same pattern to beat the level\n in the allotted time.\n As the game progresses, the speed, block sizes, and\n sequence increase.\n When the time runs out, the game is over.'
 
 window =tk.Tk()		#tkinter instance
 
