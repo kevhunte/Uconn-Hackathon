@@ -69,6 +69,18 @@ def flash(button):
 def score(score):
 	window.score_label = Label(disp)
 	window.score_label.grid(row = 1, column = 0)
+
+def count_down():
+	for t in range(30 -1, -1):
+        # format as 2 digit integers, fills with zero to the left
+        # divmod() gives minutes, seconds
+        sf = "{:02d}:{:02d}".format(*divmod(t, 10))
+        #print(sf)  # test
+        time_str.set(sf)
+        window.update()
+        # delay one second
+        time.sleep(1)
+
 =======
 
 >>>>>>> ad054daf0821b8fa85b100eccdebf4ce5c4d9653
