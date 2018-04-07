@@ -1,10 +1,15 @@
 import Tkinter as tk, time, sys, random, math
 from Tkinter import Menu
 from Tkinter import *
+from random import shuffle
 
 game_desc='Welcome to bomb-bomb! This game has a grid with objects that light up.\n Your goal is to repeat the same pattern to beat the level\n in the allotted time.\n As the game progresses, the speed, block sizes, and\n sequence increase.\n When the time runs out, the game is over.'
 
 window =tk.Tk()		#tkinter instance
+
+#-----GLOBALS------
+num_squares = 16					#defaults for these numbers
+num_flashes = 2
 
 #----Title of window----
 window.title("Bomb-bomb!") 
@@ -16,8 +21,34 @@ widgets=[]
 
 
 #-----FUNCTIONS------
+def game():
+    window.title("Go!")
+    window.geometry("450x600")
+    clear_widgets()
+    padding = window.winfo_height()/num_squares         #spacing between squares 
+    make_buttons(num_squares,padding)
+    flash_buttons(num_flashes)
+
+def set_squares(n,string):				#sets number of squares for grid
+   num_squares = n
+   label = tk.Label(text=string+' mode selected!', font=("Times New Roman",14))
+   label.grid(column=1, row=5)
+
+def set_difficulty():					#sets difficulty for game
+   clear_widgets()
+   label = tk.Label(text='Select Game difficulty', font=("Times New Roman",14))
+   label.grid(column=1, row=0)
+   easy = tk.Button(text='Easy', command = set_squares(9,'easy'))
+   med = tk.Button(text='Medium', command = set_squares(16,'medium'))
+   hard = tk.Button(text='Hard', command = set_squares(25,'hard'))
+   back = tk.Button(text= 'Go Back', command = Main_Menu)
+   easy.grid(column=1, row=1)
+   med.grid(column=1, row=2)
+   hard.grid(column=1, row=3)
+   back.grid(column=1, row=4)
+
 def greeting():
-   greets = ["Break them bombs ","What's up ","Get to work! ", "Welcome ", "Hey there "]
+   greets = ["What's up ","Ready to play? ", "Hello there ", "Hey there! "]
    #name = str(name_store.get()) 	#gets name from entry
    
    return greets[random.randint(0,len(greets)-1)] 	#picks random greeting with name
@@ -33,14 +64,6 @@ def desc():
    disp = tk.Text(master=window, height=10, width=60)   
    disp.grid(column=1, row=6)                          
    disp.insert(tk.END, game_desc)
-
-def game():
-    num_squares = 16
-    window.title("Go!")
-    window.geometry("450x600")
-    clear_widgets()
-    padding = window.winfo_height()/num_squares		#spacing between squares
-    make_buttons(num_squares,padding)
                                                         #store in data set? Rand and fill?
 def make_buttons(num,padding):
     count=x=0
@@ -48,41 +71,50 @@ def make_buttons(num,padding):
     edge=math.floor(math.sqrt(num))			#keeps track of edge of grid, so it stays as a square
     size=5
     while(count<num):					#repeat until all squares are made
-     button = tk.Button(fg="blue")
+     button = tk.Button()
+     button.config(bg='blue')
      button.grid(column=x, row=y, padx=padding,pady=padding)			#makes button instances
      x+=1
      if(x%edge==0): 
 	y+=1
 	x=0
      count+=1
+    quit = tk.Button(text='Quit', command= Main_Menu)
+    quit.grid(column=0, row=y+1 )
 
 def clear_widgets():
   widgets = window.grid_slaves()			#makes a list of all widgets
   for w in widgets:
     w.destroy()						#destroys all the current widgets
 
-
-<<<<<<< HEAD
 def score(score):
 	window.score_label = Label(disp)
 	window.score_label.grid(row = 1, column = 0)
 
 def count_down():
-	for t in range(30 -1, -1):
+	for t in range(30, -1, -1):
         # format as 2 digit integers, fills with zero to the left
         # divmod() gives minutes, seconds
-        sf = "{:02d}:{:02d}".format(*divmod(t, 10))
+	   sf = "{:02d}:{:02d}".format(*divmod(t, 10))
         #print(sf)  # test
-        time_str.set(sf)
-        window.update()
+	   time_str.set(sf)
+	   window.update()
         # delay one second
-        time.sleep(1)
+	   time.sleep(1)
 
-=======
+def flash(button):					#flashes button widgets
+   button.config(bg = 'white')
+   window.after(200, lambda: button.config(bg = 'blue') )
 
->>>>>>> ad054daf0821b8fa85b100eccdebf4ce5c4d9653
-=======
->>>>>>> f3e5a06df9e8941a6d2765eae495717ad07c63de
+def flash_buttons(num):
+   count=num						#flashes buttons, number of buttons
+   buttons = window.grid_slaves()			#makes list of all current widgets on screen
+   shuffle(buttons)					#randomizes order of widgets
+   for b in buttons:
+    if(count<=0): break					#if count is zero, stop flashing buttons
+    flash(b)
+    count-=1
+
 #----LABELS-----
 greet=greeting()
 title = tk.Label(text=greet, font=("Times New Roman",20))
@@ -95,19 +127,23 @@ prompt = tk.Label(text="What's your name?")	#stores name info from user
 #name_store = tk.Entry()
 #name_store.grid(column=0, row=2)
 
-#----BUTTONS-------
+#----Main MENU-------
 #button1 = tk.Button(text="Done", command=disp_greeting)	#bg means background. adds color
 #button1.grid(column=1,row=2)
 
-new_button = tk.Button(text="New Game", fg="blue",command=game)
-new_button.grid(column=1,row=2, padx=window.winfo_width()/2)
+def Main_Menu():
+  clear_widgets()
+  title = tk.Label(text=greet, font=("Times New Roman",18))
+  title.grid(column=1, row=0)                     			#casual greeting to user
+  play_button = tk.Button(text="Play", fg="blue",command=game)
+  #play_button.place(relx=0.5, rely=0.5, anchor=CENTER)
+  play_button.grid(column=1,row=2)
+  desc_button = tk.Button(text="Description", bg="blue", command=desc)	#will run a load function for the game
+  #desc_button.place(relx=0.5, rely=0.75, anchor=CENTER)
+  desc_button.grid(column=1, row=3)
+  #opt_button = tk.Button(text="Set Difficulty", bg="blue", command=set_difficulty)	#sets game difficulty
+  #opt_button.grid(column=1, row=4)
 
-desc_button = tk.Button(text="Description", bg="blue", command=desc)	#will run a load function for the game
-desc_button.grid(column=1, row=3, padx=window.winfo_width()/2)
-
-#opt_button = tk.Button(text="Options", bg="blue", command=not_done)	#opens another window with options
-#opt_button.grid(column=1, row=4, padx=window.winfo_width()/2)
-
-
+Main_Menu()
 window.mainloop() #runs everything in window. keep at bottom
 
