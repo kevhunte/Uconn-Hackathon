@@ -63,7 +63,9 @@ def clear_widgets():
   for w in widgets:
     w.destroy()						#destroys all the current widgets
 
-
+def flash(button):
+	button.config(bg = 'yellow')	#Gives the button color
+    window.after(200, lambda: b.config(bg = 'lightgrey')) #Gives background of window and how quick color flashes. 
 #----LABELS-----
 greet=greeting()
 title = tk.Label(text=greet, font=("Times New Roman",20))
