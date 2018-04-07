@@ -64,6 +64,10 @@ def clear_widgets():
 def flash(button):
 	button.config(bg = 'yellow')	#Gives the button color
     window.after(200, lambda: b.config(bg = 'lightgrey')) #Gives background of window and how quick color flashes. 
+
+def score(score):
+	window.score_label = Label(disp)
+	window.score_label.grid(row = 1, column = 0)
 #----LABELS-----
 greet=greeting()
 title = tk.Label(text=greet, font=("Times New Roman",20))
