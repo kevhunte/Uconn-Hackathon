@@ -43,15 +43,15 @@ def game():
     make_buttons(num_squares,padding)
                                                         #store in data set? Rand and fill?
 def make_buttons(num,padding):
-    count=y=0
-    x=4							#skip first 4 grids. Leaves room for title
+    count=x=0
+    y=1							#skip first 4 grids. Leaves room for title
     edge=math.floor(math.sqrt(num))			#keeps track of edge of grid, so it stays as a square
     size=5
     while(count<num):					#repeat until all squares are made
      button = tk.Button(fg="blue")
      button.grid(column=x, row=y, padx=padding,pady=padding)			#makes button instances
      x+=1
-     if(x>=edge): 
+     if(x%edge==0): 
 	y+=1
 	x=0
      count+=1
@@ -61,17 +61,7 @@ def clear_widgets():
   for w in widgets:
     w.destroy()						#destroys all the current widgets
 
-<<<<<<< HEAD
-def flash(button):
-	button.config(bg = 'yellow')	#Gives the button color
-    window.after(200, lambda: b.config(bg = 'lightgrey')) #Gives background of window and how quick color flashes. 
 
-def score(score):
-	window.score_label = Label(disp)
-	window.score_label.grid(row = 1, column = 0)
-=======
-
->>>>>>> ad054daf0821b8fa85b100eccdebf4ce5c4d9653
 #----LABELS-----
 greet=greeting()
 title = tk.Label(text=greet, font=("Times New Roman",20))
